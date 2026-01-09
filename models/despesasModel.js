@@ -12,7 +12,18 @@ async function createDespesas(data) {
       },
     });
 
-    return { sucess: true, data: despesa };
+    return { sucess: true, id: despesa.id };
+  } catch (error) {
+    return { sucess: false, error: error.message };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+async function readDespesas() {
+  try {
+    const despesas = await prisma.despesas.findMany();
+
+    return { sucess: true, data: despesas };
   } catch (error) {
     return { sucess: false, error: error.message };
   } finally {
@@ -22,4 +33,5 @@ async function createDespesas(data) {
 
 module.exports = {
   createDespesas,
+  readDespesas,
 };
