@@ -15,5 +15,6 @@ model Despesas {
   name String
   value Decimal  @db.Decimal(10, 2)
   state String
+  maturity DateTime
   createdAt DateTime @default(now())
 }

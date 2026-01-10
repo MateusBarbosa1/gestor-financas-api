@@ -6,4 +6,7 @@ module.exports = (app) => {
   app.get("/despesas/read", (req, res) => {
     despesasControllers.readDespesas(app, req, res);
   });
+  app.patch("/despesas/update/:id", (req, res) => {
+    despesasControllers.updateDespesas(app, req, res);
+  });
 };

@@ -19,3 +19,15 @@ module.exports.readDespesas = async (app, req, res) => {
     res.status(500).json(despesas.error);
   }
 };
+module.exports.updateDespesas = async (app, req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+
+  const despesa = await despesasModel.updateDespesa(id, data);
+
+  if (despesa.sucess) {
+    res.status(200).json(despesa.data.id);
+  } else {
+    res.status(500).json(despesa.error);
+  }
+};
