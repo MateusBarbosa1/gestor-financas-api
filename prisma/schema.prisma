@@ -16,5 +16,11 @@ model Despesas {
   value Decimal  @db.Decimal(10, 2)
   state String
   maturity DateTime
+}
+model Objetivos {
+  id String @id @default(uuid())
+  name String
+  value Decimal @db.Decimal(10, 2)
+  valueObjective Decimal @db.Decimal(10, 2)
   createdAt DateTime @default(now())
 }

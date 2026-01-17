@@ -28,7 +28,11 @@ async function createDespesas(data) {
 }
 async function readDespesas() {
   try {
-    const despesas = await prisma.despesas.findMany();
+    const despesas = await prisma.despesas.findMany({
+      orderBy: {
+        maturity: "asc",
+      },
+    });
 
     return { success: true, data: despesas };
   } catch (error) {

@@ -5,10 +5,8 @@ module.exports.createDespesas = async (app, req, res) => {
   const despesa = await despesasModel.createDespesas(data);
 
   if (despesa.success) {
-    console.log("S: " + despesa);
     res.status(201).json(despesa.id);
   } else {
-    console.log("E: " + despesa);
     res.status(500).json(despesa.error);
   }
 };
