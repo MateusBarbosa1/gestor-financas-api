@@ -25,3 +25,10 @@ model Objetivos {
   valueObjective Decimal @db.Decimal(10, 2)
   createdAt DateTime @default(now())
 }
+model Usuarios {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  salario Decimal @db.Decimal(10, 2)
+}
