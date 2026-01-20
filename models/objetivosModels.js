@@ -28,8 +28,26 @@ async function readObjetivos() {
     await prisma.$disconnect();
   }
 }
+async function addValueObjetivo(id, value) {
+  try {
+    const objetivo = await prisma.objetivos.update({
+      where: {
+        id: id,
+      },
+      data: {
+        value: Number(value),
+      },
+    });
+    return { success: true, objetivo: objetivo };
+  } catch (error) {
+    return { success: false, error: error.message };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
 
 module.exports = {
   createObjetivos,
   readObjetivos,
+  addValueObjetivo,
 };
