@@ -1,6 +1,6 @@
 module.exports = (app) => {
   const authControllers = require("../controllers/authControllers.js");
-  app.post("/usuarios/create", (req, res) => {
+  app.post("/auth/cadastro", (req, res) => {
     authControllers.createUsuarios(app, req, res);
   });
   app.post("/auth/login", (req, res) => {

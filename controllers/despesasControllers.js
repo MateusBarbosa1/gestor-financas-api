@@ -39,7 +39,6 @@ module.exports.updateDespesas = async (app, req, res) => {
   if (despesa.success) {
     if (data.state == "pago") {
       // FOI PAGO | associar despesa a objetivos
-      console.log(despesa.data);
       const categoria = despesa.data.categoria;
       const value = despesa.data.value;
 

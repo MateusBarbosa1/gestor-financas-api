@@ -26,7 +26,18 @@ async function getUsuarioEMAIL(email) {
     const usuario = await prisma.usuarios.findUniqueOrThrow({
       where: { email: email },
     });
-    console.log(usuario);
+    return { success: true, data: usuario };
+  } catch (error) {
+    return { success: false, error: error.message };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+async function getUsuarioID(id) {
+  try {
+    const usuario = await prisma.usuarios.findUniqueOrThrow({
+      where: { id: id },
+    });
     return { success: true, data: usuario };
   } catch (error) {
     return { success: false, error: error.message };
@@ -38,4 +49,5 @@ async function getUsuarioEMAIL(email) {
 module.exports = {
   createUsuario,
   getUsuarioEMAIL,
+  getUsuarioID,
 };
