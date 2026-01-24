@@ -19,3 +19,15 @@ module.exports.returnInfosUsers = (app, req, res) => {
     return res.status(200).json(data);
   });
 };
+module.exports.updateUsuario = (app, req, res) => {
+  const token = req.cookies["token"];
+  const data = req.body;
+
+  jwt.verify(token, SECRET, async (err, decoded) => {
+    if (err) return res.status(401).json({ authenticated: false });
+    const id = decoded.id;
+
+    const usuario = await usuariosModels.updateUsuario(id, data);
+    return res.status(200).json(usuario.data.id);
+  });
+};

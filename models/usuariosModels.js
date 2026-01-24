@@ -45,9 +45,27 @@ async function getUsuarioID(id) {
     await prisma.$disconnect();
   }
 }
+async function updateUsuario(id, data) {
+  try {
+    if (!id || !data) {
+      return {
+        success: false,
+        error: "ID e dados são obrigatórios",
+      };
+    }
 
+    const usuario = await prisma.usuarios.update({
+      where: { id },
+      data,
+    });
+    return { success: true, data: usuario };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
 module.exports = {
   createUsuario,
   getUsuarioEMAIL,
   getUsuarioID,
+  updateUsuario,
 };
