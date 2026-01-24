@@ -2,11 +2,12 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-async function createObjetivos(data) {
+async function createObjetivos(data, id_user) {
   try {
     const objetivo = await prisma.objetivos.create({
       data: {
         name: data.name,
+        id_user: id_user,
         value: 0.0,
         valueObjective: Number(data.valueObjective),
       },
@@ -21,6 +22,20 @@ async function createObjetivos(data) {
 async function readObjetivos() {
   try {
     const objetivos = await prisma.objetivos.findMany();
+    return { success: true, objetivos: objetivos };
+  } catch (error) {
+    return { success: false, error: error.message };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+async function readObjetivosUserID(id_user) {
+  try {
+    const objetivos = await prisma.objetivos.findMany({
+      where: {
+        id_user: id_user,
+      },
+    });
     return { success: true, objetivos: objetivos };
   } catch (error) {
     return { success: false, error: error.message };
@@ -50,4 +65,5 @@ module.exports = {
   createObjetivos,
   readObjetivos,
   addValueObjetivo,
+  readObjetivosUserID,
 };
