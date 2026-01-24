@@ -2,6 +2,9 @@
 
 Uma API RESTful moderna para um **Dashboard Financeiro**, projetada com foco em **organização, escalabilidade e boas práticas de arquitetura backend**. Este projeto serve como base sólida para aplicações financeiras pessoais ou SaaS, com autenticação, controle de despesas e objetivos financeiros.
 
+<img src="./img-github/dashboard.png">
+<img src="./img-github/arquitetura-v1.png">
+
 ---
 
 ## 🚀 Visão Geral
