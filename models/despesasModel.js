@@ -7,7 +7,7 @@ function dateInputToBrazilDate(dateString) {
   return new Date(year, month - 1, day, 12, 0, 0);
 }
 
-async function createDespesas(data) {
+async function createDespesas(data, id_user) {
   try {
     if (!data || !data.maturity) {
       return {
@@ -20,6 +20,7 @@ async function createDespesas(data) {
 
     const despesa = await prisma.despesas.create({
       data: {
+        id_user: id_user,
         name: data.name,
         value: Number(data.value),
         state: data.state || "pendente",
@@ -37,6 +38,22 @@ async function createDespesas(data) {
 async function readDespesas() {
   try {
     const despesas = await prisma.despesas.findMany({
+      orderBy: {
+        maturity: "asc",
+      },
+    });
+
+    return { success: true, data: despesas };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+async function readDespesasUserID(id_user) {
+  try {
+    const despesas = await prisma.despesas.findMany({
+      where: {
+        id_user: id_user,
+      },
       orderBy: {
         maturity: "asc",
       },
@@ -70,5 +87,6 @@ async function updateDespesa(id, data) {
 module.exports = {
   createDespesas,
   readDespesas,
+  readDespesasUserID,
   updateDespesa,
 };

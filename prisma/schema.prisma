@@ -12,6 +12,7 @@ datasource db {
 
 model Despesas {
   id  String @id @default(uuid())
+  id_user String
   name String
   value Decimal  @db.Decimal(10, 2)
   categoria String
@@ -20,6 +21,7 @@ model Despesas {
 }
 model Objetivos {
   id String @id @default(uuid())
+  id_user String
   name String
   value Decimal @db.Decimal(10, 2)
   valueObjective Decimal @db.Decimal(10, 2)

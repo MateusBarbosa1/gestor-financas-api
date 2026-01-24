@@ -1,23 +1,38 @@
 const despesasModel = require("../models/despesasModel.js");
+const jwt = require("jsonwebtoken");
+const SECRET = process.env.SECRET;
 
 module.exports.createDespesas = async (app, req, res) => {
   const data = req.body;
-  const despesa = await despesasModel.createDespesas(data);
 
-  if (despesa.success) {
-    res.status(201).json(despesa.id);
-  } else {
-    res.status(500).json(despesa.error);
-  }
+  const token = req.cookies["token"];
+
+  jwt.verify(token, SECRET, async (err, decoded) => {
+    if (err) return res.status(401).json({ authenticated: false });
+    const id_user = decoded.id;
+
+    const despesa = await despesasModel.createDespesas(data, id_user);
+
+    if (despesa.success) {
+      res.status(201).json(despesa.id);
+    } else {
+      res.status(500).json(despesa.error);
+    }
+  });
 };
 module.exports.readDespesas = async (app, req, res) => {
-  const despesas = await despesasModel.readDespesas();
+  const token = req.cookies["token"];
 
-  if (despesas.success) {
-    res.status(200).json(despesas.data);
-  } else {
-    res.status(500).json(despesas.error);
-  }
+  jwt.verify(token, SECRET, async (err, decoded) => {
+    if (err) return res.status(401).json({ authenticated: false });
+    const id_user = decoded.id;
+    const despesas = await despesasModel.readDespesasUserID(id_user);
+    if (despesas.success) {
+      res.status(200).json(despesas.data);
+    } else {
+      res.status(500).json(despesas.error);
+    }
+  });
 };
 module.exports.updateDespesas = async (app, req, res) => {
   const { id } = req.params;
