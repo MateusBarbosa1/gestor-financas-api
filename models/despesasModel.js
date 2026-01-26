@@ -3,6 +3,10 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 function dateInputToBrazilDate(dateString) {
+  if (dateString instanceof Date) return dateString;
+
+  if (dateString.includes("T")) return new Date(dateString);
+
   const [year, month, day] = dateString.split("-").map(Number);
   return new Date(year, month - 1, day, 12, 0, 0);
 }
@@ -68,10 +72,12 @@ async function readDespesasUserID(id_user) {
 async function updateDespesa(id, data) {
   try {
     if (!id || !data) {
-      return {
-        success: false,
-        error: "ID e dados são obrigatórios",
-      };
+      return { success: false, error: "ID e dados são obrigatórios" };
+    }
+
+    // Se a data de vencimento estiver presente nos dados, converte para objeto Date
+    if (data.maturity) {
+      data.maturity = dateInputToBrazilDate(data.maturity);
     }
 
     const despesa = await prisma.despesas.update({

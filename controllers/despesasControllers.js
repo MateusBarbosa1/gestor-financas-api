@@ -12,7 +12,6 @@ module.exports.createDespesas = async (app, req, res) => {
     const id_user = decoded.id;
 
     const despesa = await despesasModel.createDespesas(data, id_user);
-
     if (despesa.success) {
       res.status(201).json(despesa.id);
     } else {
@@ -62,6 +61,7 @@ module.exports.updateDespesas = async (app, req, res) => {
 
       for (let i = 0; i < objetivos.objetivos.length; i++) {
         if (categoria == objetivos.objetivos[i].name) {
+          // despesa relacionada ao objetivo
           const objetivo = await objetivosModel.addValueObjetivo(
             objetivos.objetivos[i].id,
             value,

@@ -45,12 +45,18 @@ async function readObjetivosUserID(id_user) {
 }
 async function addValueObjetivo(id, value) {
   try {
+    const objetivoV1 = await prisma.objetivos.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    const newValue = Number(objetivoV1.value) + Number(value);
     const objetivo = await prisma.objetivos.update({
       where: {
         id: id,
       },
       data: {
-        value: Number(value),
+        value: Number(newValue),
       },
     });
     return { success: true, objetivo: objetivo };

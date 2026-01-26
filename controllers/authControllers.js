@@ -10,16 +10,29 @@ module.exports.createUsuarios = async (app, req, res) => {
 
   if (usuario.success) {
     const token = jwt.sign({ id: usuario.id }, SECRET);
-    return res
-      .status(201)
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: false, // prod = true
-        sameSite: "Lax", // prod = None
-      })
-      .json({
-        nome: usuario.nome,
-      });
+    if (process.env.NODE_ENV == "development") {
+      return res
+        .status(201)
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: false, // prod = true
+          sameSite: "Lax", // prod = None
+        })
+        .json({
+          nome: usuario.nome,
+        });
+    } else {
+      return res
+        .status(201)
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: true, // prod = true
+          sameSite: "None", // prod = None
+        })
+        .json({
+          nome: usuario.nome,
+        });
+    }
   } else {
     res.status(500).json(usuario.error);
   }
