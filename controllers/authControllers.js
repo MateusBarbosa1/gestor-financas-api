@@ -49,16 +49,29 @@ module.exports.loginUser = async (app, req, res) => {
     if (validationPassword) {
       // senha validada
       const token = jwt.sign({ id: usuario.data.id }, SECRET);
-      return res
-        .status(201)
-        .cookie("token", token, {
-          httpOnly: true,
-          secure: false, // prod = true
-          sameSite: "Lax", // prod = None
-        })
-        .json({
-          nome: usuario.nome,
-        });
+      if (process.env.NODE_ENV == "development") {
+        return res
+          .status(201)
+          .cookie("token", token, {
+            httpOnly: true,
+            secure: false, // prod = true
+            sameSite: "Lax", // prod = None
+          })
+          .json({
+            nome: usuario.nome,
+          });
+      } else {
+        return res
+          .status(201)
+          .cookie("token", token, {
+            httpOnly: true,
+            secure: true, // prod = true
+            sameSite: "None", // prod = None
+          })
+          .json({
+            nome: usuario.nome,
+          });
+      }
     } else {
       // senha incorreta
       res.status(401).json({ error: "credenciais invalidas!" });
