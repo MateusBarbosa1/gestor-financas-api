@@ -1,12 +1,12 @@
 module.exports = (app) => {
   const despesasControllers = require("../controllers/despesasControllers");
-  app.post("/despesas/create", (req, res) => {
+  app.post("/api/despesas/create", (req, res) => {
     despesasControllers.createDespesas(app, req, res);
   });
-  app.get("/despesas/read", (req, res) => {
+  app.get("/api/despesas/read", (req, res) => {
     despesasControllers.readDespesas(app, req, res);
   });
-  app.patch("/despesas/update/:id", (req, res) => {
+  app.patch("/api/despesas/update/:id", (req, res) => {
     despesasControllers.updateDespesas(app, req, res);
   });
 };

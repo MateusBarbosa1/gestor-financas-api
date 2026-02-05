@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const fs = require("fs");
-const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const app = express();
@@ -10,16 +9,14 @@ const path = require("path");
 
 dotenv.config();
 
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-  }),
-);
+app.engine("html", require("ejs").renderFile);
+app.set("view engine", "html");
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
 
 const routesPath = path.join(__dirname, "routes");
 

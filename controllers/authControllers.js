@@ -17,6 +17,7 @@ module.exports.createUsuarios = async (app, req, res) => {
           httpOnly: true,
           secure: false, // prod = true
           sameSite: "Lax", // prod = None
+          path: "/",
         })
         .json({
           nome: usuario.nome,
@@ -27,7 +28,8 @@ module.exports.createUsuarios = async (app, req, res) => {
         .cookie("token", token, {
           httpOnly: true,
           secure: true, // prod = true
-          sameSite: "None", // prod = None
+          sameSite: "Lax", // prod = None
+          path: "/",
         })
         .json({
           nome: usuario.nome,
@@ -47,6 +49,7 @@ module.exports.loginUser = async (app, req, res) => {
       usuario.data.password,
     ); // validar senha
     if (validationPassword) {
+      console.log("OK");
       // senha validada
       const token = jwt.sign({ id: usuario.data.id }, SECRET);
       if (process.env.NODE_ENV == "development") {
@@ -56,6 +59,7 @@ module.exports.loginUser = async (app, req, res) => {
             httpOnly: true,
             secure: false, // prod = true
             sameSite: "Lax", // prod = None
+            path: "/",
           })
           .json({
             nome: usuario.nome,
@@ -66,7 +70,8 @@ module.exports.loginUser = async (app, req, res) => {
           .cookie("token", token, {
             httpOnly: true,
             secure: true, // prod = true
-            sameSite: "None", // prod = None
+            sameSite: "Lax", // prod = None
+            path: "/",
           })
           .json({
             nome: usuario.nome,
