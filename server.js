@@ -3,12 +3,19 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const fs = require("fs");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const app = express();
 const path = require("path");
 
 dotenv.config();
 
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  }),
+);
 app.engine("html", require("ejs").renderFile);
 app.set("view engine", "html");
 app.use(cookieParser());
