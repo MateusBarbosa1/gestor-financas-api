@@ -22,6 +22,7 @@
 body {
   background-color: var(--bg-color);
   color: var(--text-main);
+  overflow-x: hidden;
 }
 
 .container {
@@ -37,6 +38,7 @@ body {
   border-right: 1px solid #edf2f4;
   display: flex;
   flex-direction: column;
+  transition: all 0.3s ease;
 }
 
 .logo h2 {
@@ -78,6 +80,7 @@ nav a:hover {
   flex: 1;
   padding: 2rem 3rem;
   overflow-y: auto;
+  width: 100%;
 }
 
 header {
@@ -85,6 +88,12 @@ header {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2.5rem;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .user-info {
@@ -287,8 +296,9 @@ header {
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
-  z-index: 1000;
+  z-index: 2000;
   backdrop-filter: blur(4px);
+  padding: 1rem;
 }
 
 .modal-overlay:target,
@@ -306,6 +316,8 @@ header {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transform: translateY(-20px);
   transition: all 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal-overlay:target .modal-content,
@@ -478,7 +490,7 @@ header {
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 2000;
+  z-index: 3000;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -682,25 +694,7 @@ section {
   background-color: #28af9f;
 }
 
-@media (max-width: 1024px) {
-  .content-grid,
-  .expenses-container {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-  }
-  .sidebar {
-    width: 100%;
-    padding: 1rem;
-  }
-  .main-content {
-    padding: 1.5rem;
-  }
-}
+/* Mobile Menu Button */
 .mobile-menu-btn {
   display: none;
   flex-direction: column;
@@ -708,38 +702,142 @@ section {
   background: none;
   border: none;
   cursor: pointer;
+  padding: 5px;
 }
+
 .mobile-menu-btn span {
   width: 25px;
   height: 3px;
   background: var(--primary-color);
   border-radius: 5px;
+  transition: 0.3s;
 }
 
+/* Overlay for mobile sidebar */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
+
+/* Media Queries */
+
+/* Tablets and small desktops */
+@media (max-width: 1024px) {
+  .content-grid,
+  .expenses-container {
+    grid-template-columns: 1fr;
+  }
+
+  .main-content {
+    padding: 2rem;
+  }
+}
+
+/* Mobile Devices */
 @media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
   .mobile-menu-btn {
     display: flex;
   }
+
   .sidebar {
     position: fixed;
     left: -260px;
-    transition: 0.3s;
+    top: 0;
+    bottom: 0;
     z-index: 1000;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
   }
+
   .sidebar.active {
     left: 0;
   }
-  .sidebar-overlay.active {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+
+  .main-content {
+    padding: 1.5rem;
   }
+
+  header {
+    margin-bottom: 1.5rem;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  .user-info span {
+    display: none; /* Hide name on small screens to save space */
+  }
+
   .cards-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
+
+  .card .value {
+    font-size: 1.5rem;
+  }
+
+  .expense-section {
+    padding: 1.2rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .details-actions {
+    grid-template-columns: 1fr; /* Stack buttons on mobile */
+  }
+
+  .modal-content {
+    padding: 1.5rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
   header h1 {
     font-size: 1.2rem;
+  }
+
+  .card {
+    padding: 1.2rem;
+  }
+
+  .expense-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .expense-action {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .invest-item {
+    padding: 0.8rem 0;
+  }
+
+  .icon-box {
+    width: 35px;
+    height: 35px;
+    margin-right: 0.8rem;
+  }
+
+  .invest-info h4 {
+    font-size: 0.9rem;
   }
 }

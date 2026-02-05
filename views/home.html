@@ -7,9 +7,12 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <!-- Overlay para fechar o menu mobile ao clicar fora -->
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
     <div class="container">
       <!-- Sidebar -->
-      <aside class="sidebar">
+      <aside id="sidebar" class="sidebar">
         <div class="logo">
           <h2>Finanças<span>Pro</span></h2>
         </div>
@@ -28,7 +31,11 @@
       <main class="main-content">
         <header>
           <div class="header-left">
-            <button id="mobile-menu-btn" class="mobile-menu-btn">
+            <button
+              id="mobile-menu-btn"
+              class="mobile-menu-btn"
+              aria-label="Abrir menu"
+            >
               <span></span><span></span><span></span>
             </button>
             <h1>Visão Geral</h1>
@@ -346,6 +353,23 @@
         </form>
       </div>
     </div>
+
+    <!-- Script para controle do menu mobile -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const menuBtn = document.getElementById("mobile-menu-btn");
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("sidebar-overlay");
+
+        const toggleMenu = () => {
+          sidebar.classList.toggle("active");
+          overlay.classList.toggle("active");
+        };
+
+        menuBtn.addEventListener("click", toggleMenu);
+        overlay.addEventListener("click", toggleMenu);
+      });
+    </script>
 
     <script type="module" src="js/home.js"></script>
     <script type="module" src="js/despesas.js"></script>
