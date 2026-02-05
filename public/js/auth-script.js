@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         await fetchApi("/api/auth/login", "POST", data, "include");
         showNotification("Login realizado com sucesso!", "success");
         setTimeout(() => {
-          window.location.href = "/home";
+          window.location.href = "/";
         }, 500);
       } catch (error) {
         email.value = "";
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         await fetchApi("/api/auth/cadastro", "POST", data, "include");
         showNotification("Conta criada com sucesso!", "success");
         setTimeout(() => {
-          window.location.href = "/home";
+          window.location.href = "/";
         }, 100);
       } catch (error) {
         showNotification("Erro ao criar a conta!", "error");
