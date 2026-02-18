@@ -43,7 +43,10 @@ function renderObjetivos(objetivos) {
 
       <small>${formatBRL(atual)} / ${formatBRL(total)}</small>
     `;
-
+    card.style.cursor = "pointer";
+    card.addEventListener("click", () => {
+      if (window.openGoalDetails) window.openGoalDetails(objetivos);
+    });
     container.appendChild(card);
   });
 }

@@ -89,10 +89,20 @@ async function updateDespesa(id, data) {
     return { success: false, error: error.message };
   }
 }
+async function deleteDespesa(id_despesa) {
+  try {
+    await prisma.despesas.delete({ where: { id: id_despesa } });
+
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
 
 module.exports = {
   createDespesas,
   readDespesas,
   readDespesasUserID,
   updateDespesa,
+  deleteDespesa,
 };

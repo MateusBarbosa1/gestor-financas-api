@@ -353,6 +353,46 @@
         </form>
       </div>
     </div>
+    <!-- MODAL DETALHES DO OBJETIVO -->
+    <div id="modal-detalhes-objetivo" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Detalhes do Objetivo</h2>
+          <button
+            type="button"
+            class="close-goal-details-modal"
+            id="close-goal-details-modal"
+          >
+            &times;
+          </button>
+        </div>
+        <div class="details-body">
+          <div class="detail-item">
+            <label>ID:</label><span id="goal-detail-id">...</span>
+          </div>
+          <div class="detail-item">
+            <label>Nome:</label><span id="goal-detail-name">...</span>
+          </div>
+          <div class="detail-item">
+            <label>Valor Alvo:</label><span id="goal-detail-target">...</span>
+          </div>
+          <div class="detail-item">
+            <label>Valor Atual:</label><span id="goal-detail-current">...</span>
+          </div>
+          <div class="detail-item">
+            <label>Progresso:</label><span id="goal-detail-progress">...</span>
+          </div>
+        </div>
+        <div class="form-actions details-actions">
+          <button type="button" class="btn-delete" id="btn-delete-goal">
+            Deletar
+          </button>
+          <button type="button" class="btn-update" id="btn-edit-goal">
+            Atualizar
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Script para controle do menu mobile -->
     <script>
@@ -370,7 +410,8 @@
         overlay.addEventListener("click", toggleMenu);
       });
     </script>
-
+    <!-- Adicione este script na lista de scripts no final do body -->
+    <script type="module" src="js/detalhes-objetivo.js"></script>
     <script type="module" src="js/home.js"></script>
     <script type="module" src="js/despesas.js"></script>
     <script type="module" src="js/objetivos.js"></script>

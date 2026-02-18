@@ -74,3 +74,25 @@ module.exports.updateDespesas = async (app, req, res) => {
     res.status(500).json(despesa.error);
   }
 };
+module.exports.deleteDespesas = async (app, req, res) => {
+  const { id } = req.params;
+  const token = req.cookies["token"];
+
+  jwt.verify(token, SECRET, async (err, decoded) => {
+    if (err) return res.status(401).json({ authenticated: false });
+    const id_user = decoded.id;
+    const despesasUsuario = await despesasModel.readDespesasUserID(id_user);
+
+    despesasUsuario.data.forEach(async (element) => {
+      if (element.id == id) {
+        // id da despesa realmente é do usuario autenticado
+        const despesaDeleted = await despesasModel.deleteDespesa(id);
+        if (despesaDeleted.success) {
+          res.status(200).json(despesaDeleted);
+        } else {
+          res.status(500).json(despesaDeleted.error);
+        }
+      }
+    });
+  });
+};

@@ -9,4 +9,7 @@ module.exports = (app) => {
   app.patch("/api/despesas/update/:id", (req, res) => {
     despesasControllers.updateDespesas(app, req, res);
   });
+  app.delete("/api/despesas/delete/:id", (req, res) => {
+    despesasControllers.deleteDespesas(app, req, res);
+  });
 };
