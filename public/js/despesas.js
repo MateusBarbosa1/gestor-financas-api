@@ -140,7 +140,9 @@ export async function pagarDespesa(id) {
     );
 
     showNotification("Despesa paga com sucesso!", "success");
-    readDespesa(); // Recarrega a lista sem dar reload na página
+    setTimeout(() => {
+      window.location.reload();
+    }, 600);
   } catch {
     showNotification("Erro ao pagar despesa!", "error");
   }

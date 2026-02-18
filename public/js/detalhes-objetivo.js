@@ -41,8 +41,18 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("btn-delete-goal")
     .addEventListener("click", async () => {
       if (confirm(`Deseja deletar o objetivo "${currentGoalData[0].name}"?`)) {
-        //await deletarObjetivo(currentGoalData[0].id);
+        await fetchApi(
+          `/api/objetivos/delete/${currentGoalData[0].id}`,
+          "DELETE",
+          undefined,
+          "include",
+        );
+
         modal.classList.remove("active");
+        showNotification("Objetivo deletado com Sucesso!", "success");
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
       }
     });
 

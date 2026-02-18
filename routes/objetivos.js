@@ -6,4 +6,7 @@ module.exports = (app) => {
   app.get("/api/objetivos/read", (req, res) => {
     objetivosControllers.readObjetivos(app, req, res);
   });
+  app.delete("/api/objetivos/delete/:id", (req, res) => {
+    objetivosControllers.deleteObjetivos(app, req, res);
+  });
 };

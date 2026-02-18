@@ -75,6 +75,7 @@ module.exports.updateDespesas = async (app, req, res) => {
   }
 };
 module.exports.deleteDespesas = async (app, req, res) => {
+  const objetivosModel = require("../models/objetivosModels.js");
   const { id } = req.params;
   const token = req.cookies["token"];
 
@@ -86,6 +87,22 @@ module.exports.deleteDespesas = async (app, req, res) => {
     despesasUsuario.data.forEach(async (element) => {
       if (element.id == id) {
         // id da despesa realmente é do usuario autenticado
+
+        // VERIFICAR SE A DESPESA ESTA RELACIONADA A ALGUM OBJETIVO
+        const objetivosUser = await objetivosModel.readObjetivosUserID(id_user);
+        for (let i = 0; i < objetivosUser.objetivos.length; i++) {
+          if (
+            element.categoria == objetivosUser.objetivos[i].name &&
+            element.state == "pago"
+          ) {
+            // DIMINUIR VALOR DA DESPESA AO DELETAR DESPESA
+            await objetivosModel.rmValueObjetivo(
+              objetivosUser.objetivos[i].id,
+              element.value,
+            );
+          }
+        }
+
         const despesaDeleted = await despesasModel.deleteDespesa(id);
         if (despesaDeleted.success) {
           res.status(200).json(despesaDeleted);

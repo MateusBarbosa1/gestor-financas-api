@@ -66,10 +66,48 @@ async function addValueObjetivo(id, value) {
     await prisma.$disconnect();
   }
 }
-
+async function rmValueObjetivo(id, value) {
+  try {
+    const objetivoV1 = await prisma.objetivos.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    const newValue = Number(objetivoV1.value) - Number(value);
+    const objetivo = await prisma.objetivos.update({
+      where: {
+        id: id,
+      },
+      data: {
+        value: Number(newValue),
+      },
+    });
+    return { success: true, objetivo: objetivo };
+  } catch (error) {
+    return { success: false, error: error.message };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+async function deleteObjetivo(id_objetivo) {
+  try {
+    await prisma.objetivos.delete({
+      where: {
+        id: id_objetivo,
+      },
+    });
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
 module.exports = {
   createObjetivos,
   readObjetivos,
   addValueObjetivo,
   readObjetivosUserID,
+  rmValueObjetivo,
+  deleteObjetivo,
 };
