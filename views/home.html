@@ -280,7 +280,7 @@
     <div id="modal-objetivo" class="modal-overlay">
       <div class="modal-content">
         <div class="modal-header">
-          <h2>Novo Objetivo</h2>
+          <h2 id="title-objetivo">Novo Objetivo</h2>
           <button type="button" class="close-goal-modal">&times;</button>
         </div>
         <form class="modal-form" id="goal-form">
@@ -353,42 +353,105 @@
         </form>
       </div>
     </div>
-    <!-- MODAL DETALHES DO OBJETIVO -->
-    <div id="modal-detalhes-objetivo" class="modal-overlay">
+    <!-- Modal de Detalhes do Objetivo -->
+    <div id="modal-detalhes-objetivo" class="modal">
       <div class="modal-content">
         <div class="modal-header">
           <h2>Detalhes do Objetivo</h2>
-          <button
-            type="button"
-            class="close-goal-modal"
-            id="close-goal-details-modal"
-          >
+          <button id="close-goal-details-modal" class="close-btn">
             &times;
           </button>
         </div>
-        <div class="details-body">
-          <div class="detail-item">
-            <label>ID:</label><span id="goal-detail-id">...</span>
+
+        <div class="modal-body">
+          <div class="goal-detail-item">
+            <label>ID:</label>
+            <p id="goal-detail-id"></p>
           </div>
-          <div class="detail-item">
-            <label>Nome:</label><span id="goal-detail-name">...</span>
+
+          <div class="goal-detail-item">
+            <label>Nome:</label>
+            <p id="goal-detail-name"></p>
           </div>
-          <div class="detail-item">
-            <label>Valor Alvo:</label><span id="goal-detail-target">...</span>
+
+          <div class="goal-detail-item">
+            <label>Valor Alvo:</label>
+            <p id="goal-detail-target"></p>
           </div>
-          <div class="detail-item">
-            <label>Valor Atual:</label><span id="goal-detail-current">...</span>
+
+          <div class="goal-detail-item">
+            <label>Valor Atual:</label>
+            <p id="goal-detail-current"></p>
           </div>
-          <div class="detail-item">
-            <label>Progresso:</label><span id="goal-detail-progress">...</span>
+
+          <div class="goal-detail-item">
+            <label>Progresso:</label>
+            <div class="progress-bar">
+              <div class="progress-fill" id="goal-detail-progress-bar"></div>
+            </div>
+            <p id="goal-detail-progress"></p>
           </div>
         </div>
-        <div class="form-actions details-actions">
-          <button type="button" class="btn-delete" id="btn-delete-goal">
-            Deletar
+
+        <div class="modal-footer">
+          <button id="btn-edit-goal" class="btn btn-primary">Atualizar</button>
+          <button id="btn-delete-goal" class="btn btn-danger">Deletar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Edição do Objetivo -->
+    <div id="modal-editar-objetivo" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Editar Objetivo</h2>
+          <button id="close-edit-goal-modal" class="close-btn">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <input type="hidden" id="edit-goal-id" />
+
+          <div class="form-group">
+            <label for="edit-goal-name">Nome do Objetivo:</label>
+            <input
+              type="text"
+              id="edit-goal-name"
+              placeholder="Ex: Viagem para Miami"
+              class="form-input"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="edit-goal-current-value">Valor Atual (R$):</label>
+            <input
+              type="number"
+              id="edit-goal-current-value"
+              placeholder="0.00"
+              step="0.01"
+              min="0"
+              class="form-input"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="edit-goal-target-value">Valor Objetivo (R$):</label>
+            <input
+              type="number"
+              id="edit-goal-target-value"
+              placeholder="0.00"
+              step="0.01"
+              min="0"
+              class="form-input"
+            />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button id="btn-save-goal-edit" class="btn btn-primary">
+            Salvar
           </button>
-          <button type="button" class="btn-update" id="btn-edit-goal">
-            Atualizar
+          <button id="btn-cancel-goal-edit" class="btn btn-secondary">
+            Cancelar
           </button>
         </div>
       </div>

@@ -32,11 +32,20 @@ window.openGoalDetails = function (goal) {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  const modal = document.getElementById("modal-detalhes-objetivo");
+  const modalDetalhes = document.getElementById("modal-detalhes-objetivo");
+  const modalEdicao = document.getElementById("modal-editar-objetivo");
+
+  // Fechar modal de detalhes
   document
     .getElementById("close-goal-details-modal")
-    .addEventListener("click", () => modal.classList.remove("active"));
+    .addEventListener("click", () => modalDetalhes.classList.remove("active"));
 
+  // Fechar modal de edição
+  document
+    .getElementById("close-edit-goal-modal")
+    .addEventListener("click", () => modalEdicao.classList.remove("active"));
+
+  // Deletar objetivo
   document
     .getElementById("btn-delete-goal")
     .addEventListener("click", async () => {
@@ -48,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
           "include",
         );
 
-        modal.classList.remove("active");
+        modalDetalhes.classList.remove("active");
         showNotification("Objetivo deletado com Sucesso!", "success");
         setTimeout(() => {
           window.location.reload();
@@ -56,25 +65,88 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
+  // Abrir modal de edição
   document.getElementById("btn-edit-goal").addEventListener("click", () => {
-    modal.classList.remove("active");
-    const modalObj = document.getElementById("modal-objetivo");
-    const form = document.getElementById("goal-form");
+    modalDetalhes.classList.remove("active");
 
-    let idInput =
-      document.getElementById("goal-id") ||
-      Object.assign(document.createElement("input"), {
-        type: "hidden",
-        id: "goal-id",
-        name: "id",
-      });
-    if (!idInput.parentElement) form.prepend(idInput);
-
-    idInput.value = currentGoalData.id;
-    document.getElementById("goal-name").value = currentGoalData[0].name;
-    document.getElementById("goal-value").value =
+    // Preencher os campos do modal de edição
+    document.getElementById("edit-goal-id").value = currentGoalData[0].id;
+    document.getElementById("edit-goal-name").value = currentGoalData[0].name;
+    document.getElementById("edit-goal-current-value").value =
+      currentGoalData[0].value;
+    document.getElementById("edit-goal-target-value").value =
       currentGoalData[0].valueObjective;
-    modalObj.querySelector("h2").innerText = "Atualizar Objetivo";
-    modalObj.classList.add("active");
+
+    // Abrir modal de edição
+    modalEdicao.classList.add("active");
   });
+
+  // Salvar alterações
+  document
+    .getElementById("btn-save-goal-edit")
+    .addEventListener("click", async () => {
+      const id = document.getElementById("edit-goal-id").value;
+      const name = document.getElementById("edit-goal-name").value;
+      const currentValue = parseFloat(
+        document.getElementById("edit-goal-current-value").value,
+      );
+      const targetValue = parseFloat(
+        document.getElementById("edit-goal-target-value").value,
+      );
+
+      // Validações
+      if (!name.trim()) {
+        showNotification("Por favor, preencha o nome do objetivo", "error");
+        return;
+      }
+
+      if (isNaN(currentValue) || currentValue < 0) {
+        showNotification("Valor atual inválido", "error");
+        return;
+      }
+
+      if (isNaN(targetValue) || targetValue <= 0) {
+        showNotification("Valor objetivo inválido", "error");
+        return;
+      }
+
+      if (currentValue > targetValue) {
+        showNotification(
+          "O valor atual não pode ser maior que o valor objetivo",
+          "error",
+        );
+        return;
+      }
+
+      try {
+        const response = await fetchApi(
+          `/api/objetivos/update/${id}`,
+          "PUT",
+          {
+            name: name,
+            value: currentValue,
+            valueObjective: targetValue,
+          },
+          "include",
+        );
+
+        if (response.success || response.status === 200) {
+          showNotification("Objetivo atualizado com sucesso!", "success");
+          modalEdicao.classList.remove("active");
+          setTimeout(() => {
+            window.location.reload();
+          }, 600);
+        }
+      } catch (error) {
+        showNotification("Erro ao atualizar objetivo", "error");
+        console.error(error);
+      }
+    });
+
+  // Cancelar edição
+  document
+    .getElementById("btn-cancel-goal-edit")
+    .addEventListener("click", () => {
+      modalEdicao.classList.remove("active");
+    });
 });

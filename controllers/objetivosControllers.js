@@ -59,3 +59,25 @@ module.exports.deleteObjetivos = async (app, req, res) => {
     });
   });
 };
+module.exports.updateObjetivos = async (app, req, res) => {
+  const token = req.cookies["token"];
+  const { id } = req.params;
+  const data = req.body;
+
+  jwt.verify(token, SECRET, async (err, decoded) => {
+    const id_user = decoded.id;
+
+    const objetivosUsuario = await objetivosModels.readObjetivosUserID(id_user);
+    objetivosUsuario.objetivos.forEach(async (element) => {
+      if (element.id == id) {
+        // o objetivo é realmente do usuario
+        const objetivoUpdated = await objetivosModels.updateObjetivo(id, data);
+        if (objetivoUpdated.success) {
+          res.status(200).json(objetivoUpdated);
+        } else {
+          res.status(500).json(objetivoUpdated.error);
+        }
+      }
+    });
+  });
+};

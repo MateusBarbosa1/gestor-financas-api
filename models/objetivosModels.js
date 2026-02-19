@@ -103,6 +103,21 @@ async function deleteObjetivo(id_objetivo) {
     await prisma.$disconnect();
   }
 }
+async function updateObjetivo(id_objetivo, data) {
+  try {
+    await prisma.objetivos.update({
+      where: {
+        id: id_objetivo,
+      },
+      data: data,
+    });
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  } finally {
+    await prisma.$disconnect();
+  }
+}
 module.exports = {
   createObjetivos,
   readObjetivos,
@@ -110,4 +125,5 @@ module.exports = {
   readObjetivosUserID,
   rmValueObjetivo,
   deleteObjetivo,
+  updateObjetivo,
 };

@@ -9,4 +9,7 @@ module.exports = (app) => {
   app.delete("/api/objetivos/delete/:id", (req, res) => {
     objetivosControllers.deleteObjetivos(app, req, res);
   });
+  app.put("/api/objetivos/update/:id", (req, res) => {
+    objetivosControllers.updateObjetivos(app, req, res);
+  });
 };
