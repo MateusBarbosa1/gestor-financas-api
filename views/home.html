@@ -354,54 +354,54 @@
       </div>
     </div>
     <!-- Modal de Detalhes do Objetivo -->
-    <div id="modal-detalhes-objetivo" class="modal">
+    <div id="modal-detalhes-objetivo" class="modal-overlay">
       <div class="modal-content">
         <div class="modal-header">
           <h2>Detalhes do Objetivo</h2>
-          <button id="close-goal-details-modal" class="close-btn">
+          <button
+            type="button"
+            class="close-details-modal"
+            id="close-goal-details-modal"
+          >
             &times;
           </button>
         </div>
-
-        <div class="modal-body">
-          <div class="goal-detail-item">
-            <label>ID:</label>
-            <p id="goal-detail-id"></p>
+        <div class="details-body">
+          <div class="detail-item">
+            <label>UUID:</label>
+            <span id="goal-detail-id">...</span>
           </div>
-
-          <div class="goal-detail-item">
+          <div class="detail-item">
             <label>Nome:</label>
-            <p id="goal-detail-name"></p>
+            <span id="goal-detail-name">...</span>
           </div>
-
-          <div class="goal-detail-item">
-            <label>Valor Alvo:</label>
-            <p id="goal-detail-target"></p>
+          <div class="detail-item">
+            <label>Valor do Objetivo:</label>
+            <span id="goal-detail-target">...</span>
           </div>
-
-          <div class="goal-detail-item">
+          <div class="detail-item">
             <label>Valor Atual:</label>
-            <p id="goal-detail-current"></p>
+            <span id="goal-detail-current">...</span>
           </div>
-
-          <div class="goal-detail-item">
-            <label>Progresso:</label>
+          <div class="detail-item">
             <div class="progress-bar">
-              <div class="progress-fill" id="goal-detail-progress-bar"></div>
+              <div class="progress" id="goal-detail-progress"></div>
             </div>
-            <p id="goal-detail-progress"></p>
           </div>
         </div>
-
-        <div class="modal-footer">
-          <button id="btn-edit-goal" class="btn btn-primary">Atualizar</button>
-          <button id="btn-delete-goal" class="btn btn-danger">Deletar</button>
+        <div class="form-actions details-actions">
+          <button type="button" class="btn-delete" id="btn-delete-goal">
+            Deletar
+          </button>
+          <button type="button" class="btn-update" id="btn-edit-goal">
+            Atualizar
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Modal de Edição do Objetivo -->
-    <div id="modal-editar-objetivo" class="modal">
+    <div id="modal-editar-objetivo" class="modal-overlay">
       <div class="modal-content">
         <div class="modal-header">
           <h2>Editar Objetivo</h2>
@@ -447,10 +447,8 @@
         </div>
 
         <div class="modal-footer">
-          <button id="btn-save-goal-edit" class="btn btn-primary">
-            Salvar
-          </button>
-          <button id="btn-cancel-goal-edit" class="btn btn-secondary">
+          <button id="btn-save-goal-edit" class="btn btn-save">Salvar</button>
+          <button id="btn-cancel-goal-edit" class="btn btn-cancel">
             Cancelar
           </button>
         </div>

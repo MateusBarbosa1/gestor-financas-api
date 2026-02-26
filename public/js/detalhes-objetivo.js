@@ -27,7 +27,8 @@ window.openGoalDetails = function (goal) {
   document.getElementById("goal-detail-current").innerText = formatBRL(
     currentGoalData[0].value,
   );
-  document.getElementById("goal-detail-progress").innerText = `${progress}%`;
+  let progress_bar = document.getElementById("goal-detail-progress");
+  progress_bar.style.width = `${progress}%`;
   modal.classList.add("active");
 };
 
