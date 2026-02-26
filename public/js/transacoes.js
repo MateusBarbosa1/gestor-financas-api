@@ -139,9 +139,19 @@ async function loadTransactions() {
 // ===========================
 // Inicialização
 // ===========================
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   // Carrega os dados iniciais
   loadTransactions();
+
+  const res = await fetch("/api/usuarios/read/unique", {
+    credentials: "include",
+  });
+  const data = await res.json();
+
+  const usuarioNameDOM = document.querySelector(".user-info span");
+  const usuarioName = data.nome.split(" ")[0];
+
+  usuarioNameDOM.innerText = `Olá, ${usuarioName}`;
 
   // Configura os ouvintes de eventos para busca e filtro
   const searchInput = document.getElementById("search-input");
