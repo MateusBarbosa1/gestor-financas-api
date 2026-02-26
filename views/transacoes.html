@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transações - FinançasPro</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/transacoes.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>Finanças<span>Pro</span></h2>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="home.html">Dashboard</a></li>
+            <li class="active"><a href="transacoes.html">Transações</a></li>
+            <li><a href="#">Investimentos</a></li>
+            <li><a href="#">Objetivos</a></li>
+            <li><a href="#">Configurações</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <header>
+          <div class="header-left">
+            <button id="mobile-menu-btn" class="mobile-menu-btn">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <h1>Histórico de Transações</h1>
+          </div>
+          <div class="user-info">
+            <span>Olá, Usuário</span>
+            <div class="avatar"></div>
+          </div>
+        </header>
+
+        <!-- Seção de Filtros -->
+        <section class="filters-section">
+          <div class="search-box">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Pesquisar por nome..."
+            />
+          </div>
+          <div class="filter-group">
+            <select id="category-filter">
+              <option value="all">Todas as Categorias</option>
+              <option value="alimentacao">Alimentação</option>
+              <option value="moradia">Moradia</option>
+              <option value="transporte">Transporte</option>
+              <option value="lazer">Lazer</option>
+              <option value="outros">Outros</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- Lista de Transações -->
+        <section class="transactions-container">
+          <div class="transactions-header">
+            <h2>Gastos Pagos</h2>
+            <span id="total-paid-count" class="badge success"
+              >0 transações</span
+            >
+          </div>
+          <div id="transactions-list" class="transactions-list">
+            <div class="loading-state">Carregando transações...</div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- MODAL DETALHES DA DESPESA (Reutilizado do Dashboard) -->
+    <div id="modal-detalhes" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Detalhes da Transação</h2>
+          <button
+            type="button"
+            class="close-details-modal"
+            id="close-details-modal"
+          >
+            &times;
+          </button>
+        </div>
+        <div class="details-body">
+          <div class="detail-item">
+            <label>UUID:</label><span id="detail-uuid">...</span>
+          </div>
+          <div class="detail-item">
+            <label>Nome:</label><span id="detail-name">...</span>
+          </div>
+          <div class="detail-item">
+            <label>Valor:</label><span id="detail-value">...</span>
+          </div>
+          <div class="detail-item">
+            <label>Categoria:</label><span id="detail-category">...</span>
+          </div>
+          <div class="detail-item">
+            <label>Estado:</label><span id="detail-status">...</span>
+          </div>
+          <div class="detail-item">
+            <label>Data:</label><span id="detail-date">...</span>
+          </div>
+        </div>
+        <div class="form-actions details-actions">
+          <button type="button" class="btn-delete" id="btn-delete-expense">
+            Deletar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/transacoes.js"></script>
+    <script type="module" src="js/detalhes-despesa.js"></script>
+    <script>
+      // Lógica do Menu Mobile (Hambúrguer)
+      document.addEventListener("DOMContentLoaded", () => {
+        const menuBtn = document.getElementById("mobile-menu-btn");
+        const sidebar = document.querySelector(".sidebar");
+        let overlay = document.querySelector(".sidebar-overlay");
+
+        if (!overlay) {
+          overlay = document.createElement("div");
+          overlay.className = "sidebar-overlay";
+          document.body.appendChild(overlay);
+        }
+
+        const toggleMenu = () => {
+          menuBtn.classList.toggle("active");
+          sidebar.classList.toggle("active");
+          overlay.classList.toggle("active");
+        };
+
+        if (menuBtn) menuBtn.addEventListener("click", toggleMenu);
+        overlay.addEventListener("click", toggleMenu);
+      });
+    </script>
+  </body>
+</html>

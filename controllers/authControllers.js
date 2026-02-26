@@ -49,7 +49,6 @@ module.exports.loginUser = async (app, req, res) => {
       usuario.data.password,
     ); // validar senha
     if (validationPassword) {
-      console.log("OK");
       // senha validada
       const token = jwt.sign({ id: usuario.data.id }, SECRET);
       if (process.env.NODE_ENV == "development") {
